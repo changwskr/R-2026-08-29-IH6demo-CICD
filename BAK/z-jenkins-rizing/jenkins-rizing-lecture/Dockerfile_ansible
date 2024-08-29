@@ -43,7 +43,7 @@ RUN pip3 install --upgrade --ignore-installed pip setuptools
 RUN pip3 install ansible
 
 WORKDIR /root
-COPY ./Dockerfile ./Dockerfile
+COPY Dockerfile ./Dockerfile
 
 EXPOSE 22
 
