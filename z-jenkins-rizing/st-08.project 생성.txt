@@ -1,0 +1,7 @@
+새로운아이템 선택
+    명칭은 My-First-Project
+        General
+        Build Steps
+            - Execute Shell 선택
+                echo "aaaaa"
+

@@ -1,0 +1,30 @@
+
+
+project.basedir :현재 프로젝트가있는 디렉토리
+
+    이것은 이것이 Maven 프로젝트가 시스템에서 어디에 있는지를 의미합니다.
+    pom.xml 파일의 위치에 해당합니다.
+    POM이 /path/to/project/pom.xml 안에 있으면이 속성은 /path/to/project로 평가됩니다.
+
+    일부 속성은 Super POM 에서 상속되며
+    project.build.directory의 경우에도 마찬가지입니다.
+    POM의 <project><build><directory> 요소 내부에있는 값입니다.
+    Maven model 을 보면 이러한 모든 값에 대한 설명을 얻을 수 있습니다.
+
+project.build.directory의 경우 :
+    빌드에서 생성 된 모든 파일이있는 디렉토리입니다.
+    기본값은 target입니다.
+
+maven 기초
+    project.basedir = pom.xml이 위치한 디렉토리
+    소스코드 위치 = ${project.basedir}/src/main/java
+    리소스 위치 = ${project.basedir}/src/main/resource
+    class 위치 = ${project.basedir}/target/classes
+    jar 위치 = ${project.basedir}/target
+
+maven 환경 변수
+    빌드 : ${project.build.directory} = ${pom.build.directory} = ‘target’;
+    빌드 : ${project.build.outputDirectory} = ‘target/classes’;
+    프로젝트 이름  : ${project.name} = ${pom.name} = / 엘리먼트 설정 값;
+    프로젝트 버전  : ${project.version} = ${pom.version} = ${version} = / 엘리먼트 설정 값;
+    최종 파일 이름 : ${project.build.finalName}= // 엘리먼트 설정 값

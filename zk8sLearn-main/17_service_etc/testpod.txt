@@ -1,0 +1,9 @@
+[root@testpod /]# cat /etc/resolv.conf
+search default.svc.cluster.local svc.cluster.local cluster.local
+nameserver 10.96.0.10
+options ndots:5
+
+[root@testpod /]# curl 10-96-58-206.default.pod.cluster.local
+
+10-96-58-206 는 pod-ip를 나타낸다.
+

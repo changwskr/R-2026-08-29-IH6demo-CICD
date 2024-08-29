@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-nodeselector
+spec:
+  # in (gpu=true,dis=ssd) deploy
+  nodeSelector:
+    gpu: "true"
+    disk: ssd
+    rel: prd
+  containers:
+  - name: nginx
+    image: nginx:1.14
+    ports:

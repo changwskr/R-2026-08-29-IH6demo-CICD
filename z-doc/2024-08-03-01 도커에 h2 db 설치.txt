@@ -1,0 +1,111 @@
+Docker에 H2 Database를 설치하고 실행하는 방법을 안내해 드리겠습니다. H2 Database는 Java 기반의 경량형 데이터베이스로, 개발 및 테스트 목적으로 많이 사용됩니다. Docker를 통해 H2 Database를 실행하려면 다음 단계를 따라 진행하면 됩니다.
+
+### 1. Docker 이미지 준비
+
+먼저, H2 Database의 Docker 이미지를 준비합니다. H2 Database의 공식 Docker 이미지는 없지만, 이를 대신할 수 있는 이미지를 사용하거나 직접 Dockerfile을 작성하여 이미지를 생성할 수 있습니다.
+
+여기서는 공식적으로 제공되지 않는 대신, 커뮤니티에서 제공하는 H2 Database Docker 이미지를 사용해보겠습니다.
+
+### 2. Docker Hub에서 H2 Database 이미지 가져오기
+
+Docker Hub에서 H2 Database 이미지를 가져옵니다. 여기서는 `oscarfonts/h2` 이미지를 사용합니다.
+
+```sh
+docker pull oscarfonts/h2
+```
+
+### 3. Docker 컨테이너 실행
+
+H2 Database Docker 이미지를 사용하여 컨테이너를 실행합니다. H2 Database의 웹 콘솔에 접근할 수 있도록 포트를 매핑합니다.
+
+```sh
+docker run -d -p 8082:8082 --name h2-db oscarfonts/h2
+```
+
+위 명령어는 H2 Database를 백그라운드에서 실행하고, 호스트의 8082 포트를 컨테이너의 8082 포트에 매핑합니다.
+
+### 4. H2 Database 웹 콘솔 접근
+
+브라우저를 열고 다음 URL로 접근하여 H2 Database 웹 콘솔에 접속합니다.
+
+```sh
+http://localhost:8082
+```
+
+### 5. H2 Database 접속 설정
+
+웹 콘솔에서 H2 Database에 접속하기 위해 다음 정보를 입력합니다.
+
+- **Driver Class**: `org.h2.Driver`
+- **JDBC URL**: `jdbc:h2:~/test`
+- **User Name**: `sa`
+- **Password**: (빈 칸으로 둡니다)
+
+기본적으로 H2 Database는 메모리 모드로 실행되며, 파일 모드로 실행하고 싶다면 JDBC URL을 `jdbc:h2:/path/to/your/db` 형식으로 지정할 수 있습니다.
+
+### 6. Docker Compose 사용 (선택사항)
+
+Docker Compose를 사용하면 여러 컨테이너를 쉽게 관리할 수 있습니다. 다음은 H2 Database를 Docker Compose로 설정하는 예제입니다.
+
+`docker-compose.yml` 파일을 생성하고 다음 내용을 추가합니다.
+
+```yaml
+version: '3.1'
+
+services:
+  h2:
+    image: oscarfonts/h2
+    container_name: h2-db
+    ports:
+      - "8082:8082"
+    volumes:
+      - h2-data:/opt/h2-data
+    environment:
+      - H2_OPTIONS=-ifNotExists
+
+volumes:
+  h2-data:
+```
+
+이 파일을 저장한 후, Docker Compose를 사용하여 H2 Database 컨테이너를 실행합니다.
+
+```sh
+docker-compose up -d
+```
+
+### 7. H2 Database 데이터 지속성 설정
+
+H2 Database 데이터를 지속시키기 위해 데이터 디렉토리를 볼륨으로 마운트할 수 있습니다. 위의 Docker Compose 예제에서는 `h2-data` 볼륨을 사용하여 데이터를 지속시킵니다.
+
+이제 H2 Database가 Docker에서 실행 중이며, 데이터는 컨테이너가 재시작되더라도 지속됩니다.
+
+이 과정을 통해 Docker에서 H2 Database를 설치하고 실행할 수 있습니다. 이를 통해 개발 및 테스트 환경에서 경량형 데이터베이스를 쉽게 사용할 수 있습니다.
+
+
+
+docker
+docker pull oscarfonts/h2
+docker run -d -p 8082:8082 --name h2-db oscarfonts/h2
+http://localhost:8082
+
+
+docker-compose.yml
+--------------------------------------
+version: '3.1'
+
+services:
+  h2:
+    image: oscarfonts/h2
+    container_name: h2-db
+    ports:
+      - "8082:8082"
+    volumes:
+      - h2-data:/opt/h2-data
+    environment:
+      - H2_OPTIONS=-ifNotExists
+
+volumes:
+  h2-data:
+------------------------------------------
+docker-compose up -d
+

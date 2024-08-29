@@ -1,0 +1,62 @@
+작업한 결과는 다음에 저장된다.
+   /var/jenkins_home/workspace/My-Second-Project
+   .git pom.xml src target
+
+
+===========================================================
+테스트 git
+    https://github.com/joneconsulting/cicd-web-project
+
+소스코드관리
+    gitrepository URL
+        https://github.com/joneconsulting/cicd-web-project
+
+    Branches to build
+        Branch Specifier (blank for 'any')
+        */main
+
+Pre Steps
+    Build
+        Root POM
+            pom.xml
+        Goals and options
+            clean compile package
+
+----------------------------------------------
+두번째 프로젝트를 실행한다.
+----------------------------------------------
+도커 exec에서
+$ cd /var/jenkins_home/workspace/My-Second-Project
+/var/jenkins_home/workspace/My-Second-Project
+$ ls
+pom.xml  src  target
+
+다음의 내용들이 있는지 확인한다.
+
+--------------------------------------------------------------
+Building in workspace /var/jenkins_home/workspace/My-Second-Project
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/My-Second-Project/.git # timeout=10
+ > git config remote.origin.url https://github.com/joneconsulting/cicd-web-project # timeout=10
+ > git --version # timeout=10
+ > git --version # 'git version 2.39.2'
+ > git fetch --tags --force --progress -- https://github.com/joneconsulting/cicd-web-project +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 66fdf13b1fa9e197b207dd548a9b6f680b17b2ba # timeout=10
+ > git rev-list --no-walk 66fdf13b1fa9e197b207dd548a9b6f680b17b2ba # timeout=10
+
+/opt/java/openjdk/bin/java -cp /var/jenkins_home/plugins/maven-plugin/WEB-INF/lib/maven35-agent-1.14.jar:/var/jenkins_home/tools/hudson.tasks.Maven_MavenInstallation/maven3.8.5/boot/plexus-classworlds-2.6.0.jar:/var/jenkins_home/tools/hudson.tasks.Maven_MavenInstallation/maven3.8.5/conf/logging jenkins.maven3.agent.Maven35Main /var/jenkins_home/tools/hudson.tasks.Maven_MavenInstallation/maven3.8.5 /var/jenkins_home/war/WEB-INF/lib/remoting-3206.vb_15dcf73f6a_9.jar /var/jenkins_home/plugins/maven-plugin/WEB-INF/lib/maven35-interceptor-1.14.jar /var/jenkins_home/plugins/maven-plugin/WEB-INF/lib/maven3-interceptor-commons-1.14.jar 33035
+
+Waiting for Jenkins to finish collecting data
+[JENKINS] Archiving /var/jenkins_home/workspace/My-Second-Project/pom.xml to com.njonecompany.web/web/1.0/web-1.0.pom
+[JENKINS] Archiving /var/jenkins_home/workspace/My-Second-Project/target/hello-world.war to com.njonecompany.web/web/1.0/web-1.0.war
+
+-------------------------------------------------------------
+Workspace of My-Second-Project on Built-In Node
+My-Second-Project/
+    .git
+    src
+    target
+    Dockerfile
+    pom.xml
+

@@ -1,0 +1,19 @@
+4번째 프로젝트를 생성한다.
+
+소스코드관리
+    GIT
+        repository url 셋팅 https://github.com/changwskr/IHcicd-web-project-main.git
+        Branch to build 셋팅 */master
+
+빌드유발
+    Build whenever a SNAPSHOT dependency is built (체킹)
+    Poll SCM (checking)
+        shhedule
+            * * * * *
+
+빌드후 조치
+    war/ear 파일은 **/*.war로 셋팅
+    tomcat 9.x 세팅
+        credentials - deployer/****
+    tomcat url 셋팅 http://192.168.0.4:8081
+

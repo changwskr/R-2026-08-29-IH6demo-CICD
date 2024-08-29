@@ -1,0 +1,5 @@
+mvn clean compile package && java -jar target/IH6demo-2025-08-03-0.0.1-SNAPSHOT.jar
+
+or
+
+java -jar target/IH6demo-2025-08-03-0.0.1-SNAPSHOT.jar

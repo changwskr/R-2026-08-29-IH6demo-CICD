@@ -1,0 +1,6 @@
+cd /home/roian/docro
+git pull
+docker rm -f sp_commo || true
+docker pull changwskr/docro
+docker create --name sp_commo changwskr/docro:latest
+docker start sp_commo

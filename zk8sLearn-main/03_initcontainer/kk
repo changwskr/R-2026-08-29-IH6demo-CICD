@@ -1,0 +1,11 @@
+until 
+	echo 1
+	kk.$(ls -l)
+	echo $?
+do 
+	echo "waiting"
+	for kk
+	do
+		sleep 2
+	done
+done

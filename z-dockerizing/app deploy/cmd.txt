@@ -1,0 +1,33 @@
+war파일은 mvn clean compile package를 통해서 작성한다.
+IH4demo-2-2024-07-30-0.0.1-SNAPSHOT.war 파일을 Dockerfile이 위치에 복사한다.
+docker_build.bat 을 실행한다.
+docker_pushj.bat 을 실행한다.
+docker_run.bat 을 실행한다.
+
+
+yaml 파일을 준비한다.
+deployment.yaml, service.yaml 이다.
+k8s_deploy.bat 실행한다.
+
+
+도커파일을 만들고 이것을 컨테이너에 실행한다.
+dir Dockerfile
+docker build -t my-tomcat-app .
+docker run -d -p 8080:8080 --name my-running-app my-tomcat-app
+
+
+도커허브에 등록한다.
+docker tag my-tomcat-app changwskr1974/my-tomcat-app
+docker push changwskr1974/my-tomcat-app
+
+
+kubectl get pods
+kubectl delete pod tomcat-deployment-57c45cf796-9khhl
+pod "tomcat-deployment-57c45cf796-9khhl" deleted
+
+kubectl get deployments
+kubectl delete deployment tomcat-deployment
+
+kubectl get service
+kubectl delete service tomcat-service
+

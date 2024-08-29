@@ -1,0 +1,1 @@
+docker run -d -p 8088:8088 -p 50000:50000 --name jenkins-server --restart=on-failure jenkins/jenkins:lts-jdk11

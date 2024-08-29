@@ -1,0 +1,11 @@
+● 이미지 다운로드
+docker pull jenkins/jenkins
+
+● Jenkins 실행
+docker run -d -p 8080:8080 -p 50000:50000 --name jenkins-server --restart=on-failure jenkins/jenkins:lts-jdk11
+    -lts-jdk11 는 tag이다.
+    -jenkins/jenkins 앞 jenkins는 계정, 뒤 jenkins는 repository를 말한다.
+    -d 옵션은 대몬형식으로 기동한다는 뜻이다.
+
+docker run -d -p 8080:8080 -p 50000:50000 --name jenkins-server --restart=on-failure -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts-jdk11
+    -v jenkins_home:/var/jenkins_home : 우리의 host 디렉토리 docker 내 container 볼륨을 맞추는 작업이다. 이 디렉토리가 있어야 파일이 삭제되지 않는다.

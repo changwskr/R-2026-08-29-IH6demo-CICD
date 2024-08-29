@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-h6demo-app-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-h6demo-app
+  template:
+    metadata:
+      labels:
+        app: my-h6demo-app
+    spec:
+      containers:
+        - name: my-h6demo-app
+          image: changwskr/my-h6demo-app:latest
+          ports:
+            - containerPort: 8080

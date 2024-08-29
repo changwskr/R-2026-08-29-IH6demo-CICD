@@ -1,0 +1,10 @@
+Jenkins 관리
+    Plugins
+        available plugin
+            - maven integration을 조회하여 설치한다.
+    Tools
+        Maven installations
+            - docker에서 maven이 설치되어 있는지 확인한다
+                mvn --version
+            -
+
