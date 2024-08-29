@@ -1,0 +1,19 @@
+Jenkins 관리
+    Plugins
+        available plugin
+            - maven integration을 조회하여 설치한다.
+    Tools
+        Maven installations
+            add maven
+                Name
+                    maven3.9.9
+                        nstall automatically
+                            ?
+                            Install from Apache
+                                Version
+                                3.9.9
+
+            - docker에서 maven이 설치되어 있는지 확인한다
+                mvn --version
+            -
+

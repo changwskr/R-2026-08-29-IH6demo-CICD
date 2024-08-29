@@ -1,0 +1,54 @@
+4번째 프로젝트를 생성한다. 2024-08-29-02-Jenkins-Job-03
+
+소스코드관리
+    GIT
+        repository url 셋팅 https://github.com/changwskr/IHcicd-web-project-main.git
+                            https://github.com/joneconsulting/cicd-web-project
+        Branch to build 셋팅 */master
+
+빌드유발
+    Build whenever a SNAPSHOT dependency is built (체킹)
+    Poll SCM (checking)
+        shhedule
+            * * * * *
+
+빌드후 조치
+    Deploy war/ear to a container
+        war/ear 파일은 **/*.war로 셋팅
+        tomcat 9.x 세팅
+            credentials - deployer/****
+                ====================================================================================================
+                젠킨스에서 톰캣으로 접근하기 위한 자격을 얻는 작업을 한다.
+                Jenkins Credentials Provider: Jenkins
+                    Add Credentials
+                        Domain
+
+                            Global credentials (unrestricted)
+                    Kind
+
+                        Username with password
+                        Scope
+                        ?
+
+                            Global (Jenkins, nodes, items, all child items, etc)
+                        Username
+                        ?
+                        deployer
+
+                        Treat username as secret
+                        ?
+                        Password
+                        ?
+                        ••••••••
+                        ID
+                        ?
+                        deployer_user
+                        Description
+                        ?
+                        user to deploy on tomcat vm
+
+                ====================================================================================================
+
+        tomcat url 셋팅 http://192.168.0.4:8081
+
+
