@@ -1,0 +1,9 @@
+- name: create service for deployment
+  hosts: k8s
+  # become: true
+  # user: ubuntu
+
+  tasks:
+  - name: create a service
+    command: kubectl apply -f cicd-devops-service.yml
+    ignore_errors: yes

@@ -1,0 +1,1 @@
+이 파일은 jenkin-server를 통해서 ssh를 가지고 전송받는다.

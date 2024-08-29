@@ -1,0 +1,1 @@
+https://github.com/joneconsulting/k8s/blob/master/install/kubernetes_install.md

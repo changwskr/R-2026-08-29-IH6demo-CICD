@@ -1,5 +1,5 @@
 
-â–  dockerfile
+¡á dockerfile
 
 
 docker build -t my-tomcat-app .

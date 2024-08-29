@@ -1,0 +1,13 @@
+root@k8s-master:~# ls -l
+total 8112
+drwxr-xr-x 2 root root    4096 Aug 10 12:08 23-08-10
+-rw-r--r-- 1 root root  238089 Aug 16  2023 calico.yaml
+-rw-r--r-- 1 root root     411 Aug  8 13:56 cicd-devops-deployment.yml
+-rw-r--r-- 1 root root     241 Aug  8 13:56 cicd-devops-service.yml
+-rw-r--r-- 1 root root      67 Aug  4 14:51 Dockerfile
+-rw-r--r-- 1 root root 8025929 Aug 11 03:53 hello-world.war
+-rwxrwxrwx 1 root root     338 Aug 10 13:24 make_image_deploy.sh
+-rw-r--r-- 1 root root     452 Aug 11 03:43 my-pip-f07-deployment.yml
+-rw-r--r-- 1 root root     274 Aug 11 03:56 my-pip-f07-service.yml
+-rwxr-xr-x 1 root root     327 Aug 11 03:47 my-pip-make-img-svc.sh
+drwx------ 4 root root    4096 Sep 15  2023 snap

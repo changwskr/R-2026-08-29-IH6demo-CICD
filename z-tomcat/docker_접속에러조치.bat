@@ -30,6 +30,8 @@ apt-get update
 apt-get install vim
 
 # tomcat-user.xml 사용자 정보 변경
+cd /usr/local/tomcat/conf
+
  <role rolename="manager-gui"/>
    <role rolename="manager-script"/>
    <role rolename="manager-jmx"/>

@@ -1,0 +1,10 @@
+
+/var/jenkins_home/workspace/My-Pipeline-F04-Maven-Build
+    $ ls
+    Dockerfile  pom.xml  src  target
+    $ ls -l
+    total 16
+    -rw-r--r--  1 jenkins jenkins  127 Aug 11 01:28 Dockerfile
+    -rw-r--r--  1 jenkins jenkins 3631 Aug 11 01:28 pom.xml
+    drwxr-xr-x  4 jenkins jenkins 4096 Aug 11 01:28 src
+    drwxr-xr-x 10 jenkins jenkins 4096 Aug 11 01:29 target

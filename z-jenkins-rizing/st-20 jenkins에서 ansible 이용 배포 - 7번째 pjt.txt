@@ -1,0 +1,119 @@
+
+==============================================
+jenkins-server   ====>22=====>  ansible-server  -------------- 배포시작한다.
+                                      20022:22
+                 ====>22=====>  docker-server
+                                      10022:22
+===============================================
+                docker
+
+먼저 jekins-server로 로그인
+$ hostname -i
+172.17.0.2
+
+다음 ansible-server로 로그인
+sh-4.4# hostname -i
+172.17.0.3
+
+다음 docker-server로 로그인
+sh-4.4# hostname -i
+172.17.0.4
+
+
+1. ansible-server 로그인
+[root@c7d8ab75a377 ~]# cat first-devops-playbook.yml
+- hosts: all
+# become : true
+  tasks:
+  - name: build a docker image with deployed war file
+    command: docker build -t cicd-project-ansible .
+    args:
+        chdir: /root
+[root@c7d8ab75a377 ~]#
+[root@c7d8ab75a377 ~]# cat hosts
+172.17.0.3
+
+만약 docker가 기동되어 있지 않다면
+[root@c7d8ab75a377 ~]# docker images
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[root@c7d8ab75a377 ~]# systemctl enable docker
+Created symlink /etc/systemd/system/multi-user.target.wants/docker.service → /usr/lib/systemd/system/docker.service.
+[root@c7d8ab75a377 ~]# systemctl status docker
+[root@c7d8ab75a377 ~]# systemctl start docker
+
+
+2. jenkins에서 My-seven-pjt(ansible)를 만든다.
+여기서는 jenkins -ansible - dockerserver
+빌드후조치를 수정한다.
+
+3. 파일이 있는지 확인한다.
+ansible-server
+[root@c7d8ab75a377 ~]# ls -l
+/root
+total 7872
+-rw-r--r-- 1 root root     129 Sep 20  2022 Dockerfile
+-rw-r--r-- 1 root root     176 Aug  7 11:56 first-devops-playbook.yml
+-rw-r--r-- 1 root root 8025932 Aug  7 12:17 hello-world.war
+-rw-r--r-- 1 root root      12 Aug  7 11:51 hosts
+
+[root@c7d8ab75a377 ~]# cat hosts
+172.17.0.3
+
+4개의 파일이 존재해야 된다.
+
+[root@c7d8ab75a377 ~]# ansible-playbook -i hosts first-devops-playbook.yml
+
+PLAY [all] ****************************************************************************************************************************
+TASK [Gathering Facts] ****************************************************************************************************************
+ok: [172.17.0.4]
+TASK [build a docker image with deployed war file] ************************************************************************************
+changed: [172.17.0.4]
+PLAY RECAP ****************************************************************************************************************************
+172.17.0.4                 : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+3.  ansible-server
+first-devops-playbool.yml 수정
+============================================================================
+- hosts: all
+# become : true
+  tasks:
+  - name: build a docker image with deployed war file
+    command: docker build -t cicd-project-ansible .
+    args:
+        chdir: /root
+
+  - name: create a container using cicd-project-ansible image
+    command: docker run -d --name my_cicd_project -p 8080:8080 cicd-project-ansible
+
+4.실행
+[root@c7d8ab75a377 ~]# ansible-playbook -i hosts first-devops-playbook.yml
+
+5.실행된 리소스
+[root@c7d8ab75a377 ~]# hostname -i
+172.17.0.3
+[root@c7d8ab75a377 ~]#
+[root@c7d8ab75a377 ~]# docker rm my_cicd_project
+my_cicd_project
+[root@c7d8ab75a377 ~]# docker rmi my_cicd_project
+Error: No such image: my_cicd_project
+[root@c7d8ab75a377 ~]# docker images
+REPOSITORY             TAG       IMAGE ID       CREATED         SIZE
+cicd-project-ansible   latest    f73850342f0a   8 minutes ago   479MB
+tomcat                 9.0       f23130139036   29 hours ago    471MB
+[root@c7d8ab75a377 ~]# docker rmi cicd-project-ansible
+Untagged: cicd-project-ansible:latest
+Deleted: sha256:f73850342f0a22776dd82c6220d01ebc535881d9021f45353bdbdda473108914
+Deleted: sha256:dcef0014661c7f57539209e9d34b620a17807e429631d3c9deecc4c01a0bc848
+Deleted: sha256:0eb360ef92861bdaef2650c134bbf5db18d514eb1e8de4c6959ca87708705b4b
+
+7. 이제 jenkins 에서
+커맨드를 등록하고 요청해보자
+Exec command
+?
+ansible-playbook -i hosts first-devops-playbook.yml
+All of the transfer fields (except for Exec timeout) su
+
+
+http://localhost:8081/hello-world/
+
+

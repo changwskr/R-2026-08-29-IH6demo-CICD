@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-pip-f07-cicd-service
+  labels:
+    app: my-pip-f07-cicd-devops-project
+spec:
+  selector:
+    app: my-pip-f07-cicd-devops-project
+  type: NodePort
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 31000

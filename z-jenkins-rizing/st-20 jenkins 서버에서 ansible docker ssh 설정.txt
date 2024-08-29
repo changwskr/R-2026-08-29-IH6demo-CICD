@@ -1,0 +1,71 @@
+
+
+==============================================
+jenkins-server   ====>22=====>  ansible-server
+                                      20022:22
+===============================================
+                docker 내
+
+먼저 jekins-server로 로그인
+$ hostname -i
+172.17.0.2
+
+
+다음 ansible-server로 로그인
+sh-4.4# hostname -i
+172.17.0.3
+
+Dashboard
+    Jenkins 관리
+        System
+        ----------------------------------
+        SSH Servers
+        SSH Server
+        Name
+        ?
+        ansible-server
+        Hostname
+        ?
+        172.17.0.3
+        Username
+        ?
+        root
+        Remote Directory
+        ?
+        .
+
+        Avoid sending files that have not changed
+        ?
+        고급
+        Edited
+        ------------------------------------------
+
+        SSH Server
+        Name
+        ?
+        docker-server
+        Hostname
+        ?
+        172.17.0.4
+        Username
+        ?
+        root
+        Remote Directory
+        ?
+        .
+
+        Avoid sending files that have not changed
+        ?
+        고급
+        Edited
+        --------------------------------------------
+
+
+
+
+
+
+
+
+
+
