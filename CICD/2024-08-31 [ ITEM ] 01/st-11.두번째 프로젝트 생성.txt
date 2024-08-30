@@ -1,4 +1,7 @@
-작업한 결과는 다음에 저장된다.
+작업한 결과는 다음에 저장된다. 2024-08-31-03-MAVEN
+
+프로젝트를 생성할때 메이븐으로 해야 된다.
+
    /var/jenkins_home/workspace/My-Second-Project
    .git pom.xml src target
 
