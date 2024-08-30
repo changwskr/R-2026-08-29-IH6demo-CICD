@@ -2,8 +2,8 @@
 2028-08-04-01 :
     만약 tomcat을 설치이후 접근을 할 수 없는 경우가 발생하면
     container로 접속해서
-    mv webapp webapp.tmp
-    cp -r webapp.dist webapp
+    mv webapps webapps.tmp
+    cp -r webapps.dist webapps
     로 바꾸고 접속하면 된다.
     왜 그런지 이유는 알수없다.
 
