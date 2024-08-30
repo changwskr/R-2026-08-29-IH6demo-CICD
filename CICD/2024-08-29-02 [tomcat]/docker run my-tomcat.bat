@@ -1,1 +1,1 @@
-docker run -d -p 8081:8080 --name my-tomcat my-tomcat-app
+docker run -d -p 8081:8080 --name my-tomcat tomcat
