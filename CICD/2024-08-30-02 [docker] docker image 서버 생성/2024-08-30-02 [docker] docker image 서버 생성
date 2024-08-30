@@ -1,0 +1,42 @@
+Docker 내에 또하나의 Docker를 설치한다
+#---------------------------------------------------------------------------------------------------------------------
+    Windows1) SSH 서버 (with 도커 + dind) 실행 명령어 (방법1)
+        docker run --privileged --name docker-server ^
+                   -itd ^
+                   -p 10022:22 -p 8081:8080 ^
+                   -e container=docker ^
+                   -v /sys/fs/cgroup:/sys/fs/cgroup ^
+                   edowon0623/docker:latest /usr/sbin/init
+
+#---------------------------------------------------------------------------------------------------------------------
+    Windows2) SSH 서버 (with 도커 + dood) 실행 명령어 (방법2, 위 명령어로 실행되지 않을 경우)
+        docker run -itd ^
+                   --name docker-server ^
+                   -p 10022:22 ^
+                   -e container=docker ^
+                   --tmpfs /run --tmpfs /tmp ^
+                   -v /sys/fs/cgroup:/sys/fs/cgroup:ro ^
+                   -v /var/run/docker.sock:/var/run/docker.sock ^
+                   edowon0623/docker:latest ^
+                   /usr/sbin/init
+
+#---------------------------------------------------------------------------------------------------------------------
+    Windows3) SSH 서버 (with 도커 + no_iptables) 실행 명령어 (방법3, 위 명령어로 실행되지 않을 경우, iptables 사용하지 않고 실행)
+        docker run -itd ^
+                   --name docker-server ^
+                   -p 10022:22 -e container=docker ^
+                   --tmpfs /run --tmpfs /tmp ^
+                   -v /sys/fs/cgroup:/sys/fs/cgroup:ro ^
+                   -v /var/run/docker.sock:/var/run/docker.sock ^
+                   edowon0623/docker:no_iptables /usr/sbin/init
+
+#---------------------------------------------------------------------------------------------------------------------
+    Windows4) SSH 서버 (with 도커 + no_iptables) 실행 명령어 (방법4, 위 명령어로 실행되지 않을 경우, iptables 사용하지 않고 실행, Windows 11의 경우)
+        docker run --privileged -itd ^
+                   --name docker-server ^
+                   -p 10022:22 -e container=docker ^
+                   --tmpfs /run --tmpfs /tmp ^
+                   -v /sys/fs/cgroup:/sys/fs/cgroup:rw ^
+                   --cgroupns=host ^
+                   edowon0623/docker:no_iptables /usr/sbin/init
+
