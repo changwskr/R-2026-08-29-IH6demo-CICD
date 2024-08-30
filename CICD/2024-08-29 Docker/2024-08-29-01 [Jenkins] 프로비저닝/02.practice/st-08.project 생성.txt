@@ -1,4 +1,4 @@
-새로운아이템 선택
+새로운아이템 선택 2024-08-29-01-PJT
     명칭은 My-First-Project
         General
         Build Steps
