@@ -1,0 +1,10 @@
+
+mkdri D:\Work\dockerdata
+
+docker run -d -p 8081:8080 --name my-tomcat -v D:\Work\dockerdata:/home  tomcat
+
+docker exec -it ....
+    cd /home
+    echo "aaaa" >> kk
+
+window에서 D:\Work\dockerdata 파일 kk가 보이는지 확인한다.
