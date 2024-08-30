@@ -1,0 +1,1 @@
+docker build -t inner-docker-tomcat -f Dockerfile .
