@@ -1,0 +1,15 @@
+Jenkins 관리
+    Plugins
+        available plugin
+            - instlled plugin을 클릭하여 github plugin 설치되어 있는지 확인
+    Tools
+        Git installations
+            Name : Default
+            excutable : git
+                -----------------------------------------------------------
+                컨테이너 server 내부에서 깃을 사용할 수 있는지 확인한다.
+                PS C:\Users\chang> docker exec -it jenkins-server bash
+                    jenkins@2af1ff8aa745:/$ git --version
+                    git version 2.39.2
+
+                -------------------------------------------------------------
