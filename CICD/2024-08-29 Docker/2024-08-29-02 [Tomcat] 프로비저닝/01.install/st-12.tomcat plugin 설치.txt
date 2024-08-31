@@ -1,6 +1,6 @@
 
 
-
+#------------------------------------------------------------------------------------------------------------------------
 Jenkins 관리
     Plugins
         available plugin
@@ -8,16 +8,18 @@ Jenkins 관리
                 deploy to container plugin 역할은 war, jar 파일을 타 컨테이너 서버에 deploy를 가능하게 해준다.
     Tools
 
-
+#------------------------------------------------------------------------------------------------------------------------
 # 접속장애 조치 (컨테이너로 기동시)
 container로 접속해서
     mv webapp webapp.tmp
     cp -r webapp.dist webapp
 
+#------------------------------------------------------------------------------------------------------------------------
 # vi 설치 스크립터 (컨테이너 기동시)
 apt-get update
 apt-get install vim
 
+#------------------------------------------------------------------------------------------------------------------------
 # tomcat-user.xml 사용자 정보 변경
  <role rolename="manager-gui"/>
    <role rolename="manager-script"/>
@@ -28,6 +30,7 @@ apt-get install vim
    <user username="deployer" password="deployer" roles="manager-script"/>
    <user username="tomcat" password="tomcat" roles="manager-gui"/>
 
+#------------------------------------------------------------------------------------------------------------------------
 2024-08-04-02 : tomcat 매니저 접근
      $TOMCAT_HOM/webapps/manager/META-INF/context.xml 에서 valve 줄을 주석처리하면됩니다.
 
@@ -47,6 +50,13 @@ apt-get install vim
        <Manager sessionAttributeValueClassNameFilter="java\.lang\.(?:Boolean|Integer|Long|Number|String)|org\.apache\.catalina\.filters\.CsrfPreventionFilter\$LruCache(?:\$1)?|java\.util\.(?:Linked)?HashMap"/>
      </Context>
 
+#------------------------------------------------------------------------------------------------------------------------
+webapps.dist 복사
+cd /usr/local/tomcat
+cp -R ./webapps.dist/* ./webapps/
+
+
+#------------------------------------------------------------------------------------------------------------------------
 2024-08-04-03 : 만약 톰캣서버가 도커 컨테이너내에 있더라도
    젠킨스에서 접근 url은
    HOST PC IP로 한다.
