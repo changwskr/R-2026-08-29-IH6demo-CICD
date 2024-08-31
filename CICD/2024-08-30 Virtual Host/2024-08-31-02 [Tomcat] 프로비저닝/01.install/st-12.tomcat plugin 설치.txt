@@ -60,5 +60,5 @@ cp -R ./webapps.dist/* ./webapps/
 2024-08-04-03 : 만약 톰캣서버가 도커 컨테이너내에 있더라도
    젠킨스에서 접근 url은
    HOST PC IP로 한다.
-   http://192.168.0.4:8081/
+    http://192.168.32.10:8000/hello-world/
    그리고 container tomcat port는 8081을 오픈한다.

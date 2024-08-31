@@ -1,1 +1,0 @@
-docker run -d -p 18000:8080 --name my-tomcat tomcat

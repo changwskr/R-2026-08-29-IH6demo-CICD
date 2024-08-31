@@ -1,0 +1,100 @@
+목적
+    가상의 서버를 하나 설치해서 jenkins에서 다양한 파일들을 수신받을수 있도록한다.
+    그래서 ssh server가 필요하다.
+
+SSH 환경 구성
+1. jenkins 관리에서 설치가능한 plugin 확인한다.
+    JENKINS 관리
+        PLUGINS
+            Available Plugins
+                Publish - Publish Over SSHVersion
+
+2. JENKINS 관리
+    SYSTEM CONFIG
+        Publish over SSH
+            SSH Servers
+                추가클릭
+
+
+3. 서버생성
+# 서버정보
+my-tomcat-app l(8081) - c(8080) c(8005)
+docker-server l(8082) - c(8080)
+              l(10022) - c(22) - 패스워드 : P@ssw0rd
+
+참고자료
+----------------------------------------------------------------------
+Windows1) SSH 서버 (with 도커 + dind) 실행 명령어 (방법1)
+    docker run --privileged --name docker-server -itd -p 10022:22 -p 8082:8080 -e container=docker -v /sys/fs/cgroup:/sys/fs/cgroup edowon0623/docker:latest /usr/sbin/init
+Windows2) SSH 서버 (with 도커 + dood) 실행 명령어 (방법2, 위 명령어로 실행되지 않을 경우)
+    docker run -itd --name docker-server -p 10022:22 -e container=docker --tmpfs /run --tmpfs /tmp -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /var/run/docker.sock:/var/run/docker.sock edowon0623/docker:latest /usr/sbin/init
+Windows3) SSH 서버 (with 도커 + no_iptables) 실행 명령어 (방법3, 위 명령어로 실행되지 않을 경우, iptables 사용하지 않고 실행)
+    docker run -itd --name docker-server -p 10022:22 -e container=docker --tmpfs /run --tmpfs /tmp -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /var/run/docker.sock:/var/run/docker.sock edowon0623/docker:no_iptables /usr/sbin/init
+Windows4) SSH 서버 (with 도커 + no_iptables) 실행 명령어 (방법4, 위 명령어로 실행되지 않을 경우, iptables 사용하지 않고 실행, Windows 11의 경우)
+    docker run --privileged -itd --name docker-server -p 10022:22 -e container=docker --tmpfs /run --tmpfs /tmp -v /sys/fs/cgroup:/sys/fs/cgroup:rw --cgroupns=host edowon0623/docker:no_iptables /usr/sbin/init
+
+Windows 환경에서 Docker in Docker 방식으로 SSH+Docker 컨테이너가 기동되지 않을 때는 아래와 같이,
+Docker Out Of Docker 방식으로 기동해 보시기 바랍니다.
+-----------------------------------------------------------------------------------------------------------------------
+
+4. JENDKINS
+    Jenkins 관리
+       System
+            Publish over SSH
+                Name                ?
+                    docker-host
+                Hostname                ?
+                    192.168.32.10
+                Username                ?
+                    root
+                Remote Directory                ?
+                    .
+
+                Use password authentication, or use a different key                ?
+                    Passphrase / Password                ?
+                        ••••••••
+                    Port                ?
+                        22
+
+
+5. 서버 기동 상태 확인
+   docker-server로 ssh 로그인 하세요
+       도커의 서비스 상태 확인
+           systemctl status docker
+       도커 서비스 실행
+           systemctl start docker
+
+
+
+# 아키텍처
+    docker [jenkins    -8080,8005]
+
+    pc     [192.168.0.4-8080,      10022]
+
+    docker [docker-server-8082,    22]
+                [docker-server-8080-tomcat 기동]
+
+    docker [my-tomcat-app-8081]
+
+
+docker(my-tomcat-app: 8081->8080)
+docker(jenkins: 8080->8080)
+docker(docker-server: 10022->22, 8082->8080)
+       docker-server(tomcat: 8080->8080)
+
+# PC에서 젠킨스 접근
+    http://127.0.0.1:8080 ----> docker(jenkins) 8080
+# PC에서 docker(my-tomcat서버) 접근
+    http://127.0.0.1:8081 ----> docker(my-tomcat-app) 8080
+# PC에서 docker-server 접근
+    SSH 10022 ----------------> docker(docker-server) 22
+# docker(jenkins서버)에서 docker(my-tomcat서버) 접근
+    http://192.168.0.4:8081 ----> docker(my-tomcat-app) 8080
+# docker(jenkins서버)에서 docker(docker-server) 접근
+    PC(192.168.0.4:8081)
+    http://192.168.0.4:8081/
+# PC에서 docker(docker-server(tomcat)) 접근
+    http://127.0.0.1:8082 ----> docker(my-tomcat-app) 8080
+
+- 서비스 접근 확인
+    http://localhost:8082/hello-world/
