@@ -1,0 +1,18 @@
+
+st-16에서 수작업으로 하였던 내용을 후조치 명령어로 변경
+
+Exec command
+    docker build --tag=cicd-project -f Dockerfile .;
+    docker run -d -p 8080:8080 --name mytomcat cicd-project:latest
+
+- 서비스 접근 확인
+    http://localhost:8082/hello-world/
+
+- docker-server에 접근하여 관련 컨테이너 확인
+    sh-4.4# docker ps
+        CONTAINER ID   IMAGE                 COMMAND             CREATED         STATUS         PORTS                                       NAMES
+        eeae66efefc9   cicd-project:latest   "catalina.sh run"   3 minutes ago   Up 3 minutes   0.0.0.0:8080->8080/tcp, :::8080->8080/tcp   mytomcat
+    sh-4.4# docker images
+        REPOSITORY     TAG       IMAGE ID       CREATED         SIZE
+        cicd-project   latest    c589255a7d67   3 minutes ago   470MB
+        tomcat         9.0       65d791588861   9 days ago      462MB

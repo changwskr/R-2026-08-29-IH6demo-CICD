@@ -1,0 +1,63 @@
+docker(my-tomcat-app: 8081->8080)
+docker(jenkins: 8080->8080)
+docker(docker-server: 10022->22, 8082->8080)
+       docker-server(tomcat: 8080->8080)
+
+
+                                                 -----------
+                                                   (tomcat 8080)
+                                              --------------
+                                             [Docker Engine]
+                                           =================
+                               | Jenkins (8080)   |   Docker-server (8082)(22)(8080)
+                           =================================
+                           |     Docker Engine
+                           |
+                           ==================================
+                HOST OS (window) 8080 8082 10022
+                192.168.0.4
+============================================================
+
+
+
+                                        ----------------------------------
+                                        my-tomcat 8080    |   jenkins 8080
+                                        -----------------------------------
+                                        | Docker Engine
+                               ============================================
+                               |                Guest OS (우분투)
+                               |                192.168.32.11
+                               |   (tomcat 180000->8080, jenkins 18080->8080)
+                               ============================================
+                HOST OS (window)
+                192.168.0.4 180000 18080
+===========================================================================
+                tomcat 180000->8080, jenkins 18080->8080
+
+가. 먼저 Guset VM 을 젠킨스 서버에 등록한다.
+    이 작업을 해야
+    젠킨스 프로젝트 구성시 SSH 서버를 찾을 수 있다.
+    어디있냐
+    Jenkins 관리 > System에 존재한다.
+
+나.Jenkins 관리 > System
+    참고로 SSH Server가 docker-server로 등록된 것은 docker container에서 실행한 서버이다.
+    이 정보를 docker-host로 변경하고 192.168.32.10으로 변경한다.
+
+다. 192.168.32.10 root로 로그인하여
+    Dockerfile를 하나만든다.
+
+
+    cat /roo/Dockerfile
+    ------------------------
+    FROM tomcat:9.0
+    COPY ./hello-world.war /usr/local/tomcat/webapps
+
+라. exec command 추가
+
+        docker build --tag=cicd-project -f Dockerfile .;
+        docker run -d -p 18000:8080 --name mytomcat cicd-project:latest
+
+마. 테스트
+http://192.168.32.10:18000/hello-world/
+

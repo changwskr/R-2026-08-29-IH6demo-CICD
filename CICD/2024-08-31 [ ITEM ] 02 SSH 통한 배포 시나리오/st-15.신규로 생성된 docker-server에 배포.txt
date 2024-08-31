@@ -1,0 +1,130 @@
+
+PC - COMMIT - GIT
+JENKINS - TRIG - GIT
+        - GIT PULL
+        - MVN CLEAN COMPILE PACKAGE
+        - SSH TRANSFER - WAR - DOCKER-SERVER
+        - SSH EXEC SHELL
+                echo "------------------------------------------------------------------------" > roian-cicd-time.chk;
+                date >> roian-cicd-time.chk;
+
+                echo "■ docker stop mytomcat" >> roian-cicd-time.chk;
+                docker stop mytomcat >> roian-cicd-time.chk;
+                docker rmi cicd-project >> roian-cicd-time.chk;
+                echo "--------------------------------------" >> roian-cicd-time.chk;
+
+                echo "■ docker build --tag=cicd-project -f Dockerfile ." >> roian-cicd-time.chk;
+                docker build --tag=cicd-project -f Dockerfile . >> roian-cicd-time.chk;
+                echo "--------------------------------------" >> roian-cicd-time.chk;
+
+                echo "■ docker image inspect cicd-project:latest" >> roian-cicd-time.chk;
+                docker image inspect cicd-project:latest >> roian-cicd-time.chk;
+                echo "--------------------------------------" >> roian-cicd-time.chk;
+
+                echo "■ docker run -p 8080:8080 --name mytomcat cicd-project:latest" >> roian-cicd-time.chk;
+                docker run -d -p 8080:8080 --name mytomcat cicd-project:latest >> roian-cicd-time.chk;
+                echo "--------------------------------------" >> roian-cicd-time.chk;
+                sleep 3
+
+                date >> roian-cicd-time.chk;
+                echo "end" >> roian-cicd-time.chk;
+#----------------------------------------------------------------------------------------------------------------------
+SSH Server를 통해서 war 파일을 배포하는 과정을 보자
+target/*.war 파일을 remote의 target으로 복사해라
+
+#----------------------------------------------------------------------------------------------------------------------
+# JENKINS > My-File-Project > Configuration
+빌드 후 조치
+    Send build artifacts over SSH
+
+        SSH Publishers
+            SSH Server
+                Name
+                    docker-server(inner)
+                고급
+                    Transfers
+                        Transfer Set
+                            Source files
+                                target/*.war
+                            Remove prefix
+                                target
+                            Remote directory
+                                .
+                            Exec command
+                                echo "------------------------------------------------------------------------" > roian-cicd-time.chk;
+                                date >> roian-cicd-time.chk;
+
+                                docker stop mytomcat >> roian-cicd-time.chk;
+                                docker build --tag=cicd-project -f Dockerfile . >> roian-cicd-time.chk;
+                                docker image inspect cicd-project:latest >> roian-cicd-time.chk;
+                                docker run -p 8080:8080 --name mytomcat cicd-project:latest >> roian-cicd-time.chk;
+
+                                date >> roian-cicd-time.chk;
+                                echo "end" >> roian-cicd-time.chk;
+
+
+
+#----------------------------------------------------------------------------------------------------------------------
+[확인점검]
+- jenkins server
+    $ pwd
+    /var/jenkins_home/workspace/My-Five-Project/target
+    $ ls -l *.war
+    -rw-r--r-- 1 jenkins jenkins 8025932 Aug  4 12:11 hello-world.war
+
+- docker server
+    war 가 정상적으로 jenkins로 배포되었나
+    sh-4.4# find . -name *.war -print
+        ./root/hello-world.war
+
+    sh-4.4# ls -l
+        total 7856
+        -rw-r--r-- 1 root root     129 Sep 20  2022 Dockerfile
+        -rw------- 1 root root    2361 Sep 15  2021 anaconda-ks.cfg
+        -rw-r--r-- 1 root root     608 Sep 15  2021 anaconda-post.log
+        -rw-r--r-- 1 root root 8025932 Aug  4 12:11 hello-world.war
+        -rw------- 1 root root    2059 Sep 15  2021 original-ks.cfg
+
+    이제부터 도커파일을 이용해서 도커이미지를 만들고 톰캣을 기동하자
+    sh-4.4# cat Dockerfile
+        FROM tomcat:9.0
+        LABEL org.opencontainers.image.authors="edowon0623@gmail.com"
+        COPY ./hello-world.war /usr/local/tomcat/webapps
+
+    sh-4.4# docker build -t docker-server-tomcat -f Dockerfile .
+        .은 현재 디렉토리를 기준으로 빌드 진행하라
+        -f은 도커 파일을 지정시
+
+    sh-4.4# docker build -t docker-server -f Dockerfile .
+        Sending build context to Docker daemon  8.041MB
+        Step 1/3 : FROM tomcat:9.0
+        9.0: Pulling from library/tomcat
+        2b3981cac065: Pull complete
+        3e44a677d4d8: Pull complete
+        f561a59c5174: Pull complete
+        8fc851d1d586: Pull complete
+        4723684ec455: Pull complete
+        4dc562aef21a: Pull complete
+        4f4fb700ef54: Pull complete
+        af55bf7a7949: Pull complete
+        Digest: sha256:8c247ee5bf39eaefcd6c457d468b04f11773e10a2bb0eb47281da9d91f0e4b44
+        Status: Downloaded newer image for tomcat:9.0
+         ---> 65d791588861
+        Step 2/3 : LABEL org.opencontainers.image.authors="edowon0623@gmail.com"
+         ---> Running in c06ccb86c551
+        Removing intermediate container c06ccb86c551
+         ---> ecdea7477434
+        Step 3/3 : COPY ./hello-world.war /usr/local/tomcat/webapps
+         ---> d246987815e7
+        Successfully built d246987815e7
+        Successfully tagged docker-server-tomcat:latest
+
+    sh-4.4# docker images
+        REPOSITORY      TAG       IMAGE ID       CREATED          SIZE
+        docker-servet   latest    ab16b2b0d16e   10 seconds ago   470MB
+        tomcat          9.0       65d791588861   9 days ago       462MB
+
+    sh-4.4# docker run -p 8080:8080 --name mytomcat docker-servet:latest
+
+- 서비스 접근 확인
+    http://localhost:8082/hello-world/
