@@ -8,5 +8,5 @@ VOLUME /temp
 # COPY IH5demo-2024-08-02-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/
 
 # Tomcat의 기본 포트
-EXPOSE 8088
+EXPOSE 8081
 
