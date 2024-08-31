@@ -1,4 +1,4 @@
- Tomcat 베이스 이미지 사용
+#Tomcat 베이스 이미지 사용
 FROM tomcat:9.0
 
 # 호스트의 볼룸 설정
