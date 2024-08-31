@@ -13,7 +13,7 @@ $ hostname -i
 
 다음 ansible-server로 로그인
 sh-4.4# hostname -i
-172.17.0.3
+172.17.0.4
 
 Dashboard
     Jenkins 관리
