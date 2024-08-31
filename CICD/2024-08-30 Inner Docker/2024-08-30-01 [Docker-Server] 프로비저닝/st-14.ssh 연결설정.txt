@@ -14,6 +14,21 @@ SSH 환경 구성
         Publish over SSH
             SSH Servers
                 추가클릭
+                ------------------------------------------------------------------------------------------
+                SSH Servers
+                SSH Server
+                Name
+                ?doker-server (inner)
+                Hostname
+                ?192.168.0.3
+                Required
+                Username
+                ? root
+                Required
+                Remote Directory
+                ? .
+
+                -----------------------------------------------------------------------------------------
 
 
 3. 서버생성

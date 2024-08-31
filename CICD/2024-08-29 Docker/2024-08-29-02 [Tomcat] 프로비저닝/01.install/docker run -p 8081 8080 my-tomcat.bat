@@ -1,1 +1,0 @@
-docker run -d -p 8081:8080 --name my-tomcat -v c:\Work\dockerdata:/home  tomcat
