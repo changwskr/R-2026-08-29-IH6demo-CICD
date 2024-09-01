@@ -1,0 +1,79 @@
+목적
+    가상의 서버를 하나 설치해서 jenkins에서 다양한 파일들을 수신받을수 있도록한다.
+    그래서 ssh server가 필요하다.
+
+SSH 환경 구성
+1. jenkins 관리에서 설치가능한 plugin 확인한다.
+    JENKINS 관리
+        PLUGINS
+            Available Plugins
+                Publish - Publish Over SSHVersion
+
+2. JENKINS 관리
+    SYSTEM CONFIG
+        Publish over SSH
+            SSH Servers
+                추가클릭
+
+
+3. 서버생성
+# 서버정보
+ansible-server l(9080)  - c(8080)
+               l(20022) - c(22) - 패스워드 : P@ssw0rd
+
+4. JENDKINS
+    Jenkins 관리
+       System
+            Publish over SSH
+                Name                ?
+                    ansible-server
+                Hostname                ?
+                    172....
+                Username                ?
+                    root
+                Remote Directory                ?
+                    .
+
+                Use password authentication, or use a different key                ?
+                    Passphrase / Password                ?
+                        ••••••••
+                    Port                ?
+                        22
+
+
+5. 서버 기동 상태 확인
+   ansible-server로 ssh 로그인 하세요
+       도커의 서비스 상태 확인
+           systemctl status docker
+       도커 서비스 실행
+           systemctl start docker
+
+
+
+# 아키텍처
+    docker [jenkins    -8080,8005]
+
+    pc     [192.168.0.4-8080,      10022]
+
+    docker [docker-server-8082,    22]
+                [docker-server-8080-tomcat 기동]
+
+    docker [my-tomcat-app-8081]
+
+
+docker(jenkins: 8080->8080)
+docker(ansible-server: 20022->22, 9080->8080)
+        ansible-server(tomcat: 8080->8080)
+
+# PC에서 젠킨스 접근
+    http://127.0.0.1:8080 ----> docker(jenkins) 8080
+# PC에서 ansible-server 접근
+    SSH 20022 ----------------> docker(ansible-server) 22
+# docker(jenkins서버)에서 docker(ansible-server) 접근
+    PC(192.168.0.4:9080)
+    http://192.168.0.4:9080/
+# PC에서 docker(docker-server(tomcat)) 접근
+    http://127.0.0.1:9080 ----> docker(mytomcat) 8080
+
+- 서비스 접근 확인
+    http://localhost:9080/hello-world/
