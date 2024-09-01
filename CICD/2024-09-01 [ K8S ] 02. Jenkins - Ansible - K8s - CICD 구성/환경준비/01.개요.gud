@@ -1,0 +1,14 @@
+
+
+PC
+    DOCKER(ansible-server,172.17.0.3, hosts, playbook.yml)
+            hosts 파일에는 HOST ip를 등록하여 k8s 출동시킨다.
+
+    DOCKER(docker-server,172.17.0.4)
+
+
+(jenkins-server,172.17.0.2) -- ssh -- (ansible-server,172.17.0.3, hosts, playbook.yml) --- ssh --- (docker-server)
+
+(jenkins-server,172.17.0.2) -- ssh -- k8s
+                               kubectl apply -f cicd-devops-deployment.yml
+
