@@ -1,0 +1,1 @@
+kubectl exec -it nginx-deployment-86dcfdf4c6-4tb72 -- /bin/bash

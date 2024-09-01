@@ -1,0 +1,1 @@
+curl -X GET http://localhost:32000/hello-world/

@@ -1,0 +1,1 @@
+kubectl run nginx-test --image=nginx --port 80
