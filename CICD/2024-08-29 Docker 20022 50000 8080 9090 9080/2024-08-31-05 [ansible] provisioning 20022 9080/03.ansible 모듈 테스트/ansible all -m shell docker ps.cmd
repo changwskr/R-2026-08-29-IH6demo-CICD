@@ -1,0 +1,1 @@
+ansible all -m shell "docker ps"
