@@ -1,3 +1,5 @@
+2024-09-31-01-ansible server- war deploy
+
 
 PC - COMMIT - GIT
 JENKINS - TRIG - GIT
@@ -6,28 +8,7 @@ JENKINS - TRIG - GIT
         - SSH TRANSFER - WAR - DOCKER-SERVER
         - SSH EXEC SHELL
                 echo "------------------------------------------------------------------------" > roian-cicd-time.chk;
-                date >> roian-cicd-time.chk;
 
-                echo "■ docker stop mytomcat" >> roian-cicd-time.chk;
-                docker stop mytomcat >> roian-cicd-time.chk;
-                docker rmi cicd-project >> roian-cicd-time.chk;
-                echo "--------------------------------------" >> roian-cicd-time.chk;
-
-                echo "■ docker build --tag=cicd-project -f Dockerfile ." >> roian-cicd-time.chk;
-                docker build --tag=cicd-project -f Dockerfile . >> roian-cicd-time.chk;
-                echo "--------------------------------------" >> roian-cicd-time.chk;
-
-                echo "■ docker image inspect cicd-project:latest" >> roian-cicd-time.chk;
-                docker image inspect cicd-project:latest >> roian-cicd-time.chk;
-                echo "--------------------------------------" >> roian-cicd-time.chk;
-
-                echo "■ docker run -p 8080:8080 --name mytomcat cicd-project:latest" >> roian-cicd-time.chk;
-                docker run -d -p 8080:8080 --name mytomcat cicd-project:latest >> roian-cicd-time.chk;
-                echo "--------------------------------------" >> roian-cicd-time.chk;
-                sleep 3
-
-                date >> roian-cicd-time.chk;
-                echo "end" >> roian-cicd-time.chk;
 #----------------------------------------------------------------------------------------------------------------------
 SSH Server를 통해서 war 파일을 배포하는 과정을 보자
 target/*.war 파일을 remote의 target으로 복사해라
