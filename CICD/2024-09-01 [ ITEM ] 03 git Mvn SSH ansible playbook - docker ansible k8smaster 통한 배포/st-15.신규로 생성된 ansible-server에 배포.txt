@@ -21,7 +21,7 @@ target/*.war 파일을 remote의 target으로 복사해라
         SSH Publishers
             SSH Server
                 Name
-                    docker-server(inner)
+                    ansible-server(inner)
                 고급
                     Transfers
                         Transfer Set
@@ -33,14 +33,8 @@ target/*.war 파일을 remote의 target으로 복사해라
                                 .
                             Exec command
                                 echo "------------------------------------------------------------------------" > roian-cicd-time.chk;
-                                date >> roian-cicd-time.chk;
+                                ansible-playbook -i /etc/ansible/hosts first-playbook.yml
 
-                                docker stop mytomcat >> roian-cicd-time.chk;
-                                docker build --tag=cicd-project -f Dockerfile . >> roian-cicd-time.chk;
-                                docker image inspect cicd-project:latest >> roian-cicd-time.chk;
-                                docker run -d --rm -p 8000:8080 --name mytomcat cicd-project:latest >> roian-cicd-time.chk;
-
-                                date >> roian-cicd-time.chk;
                                 echo "end" >> roian-cicd-time.chk;
 
 
