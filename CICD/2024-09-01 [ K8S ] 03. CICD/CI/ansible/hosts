@@ -1,0 +1,4 @@
+[ansible-server]
+localhost
+[k8s]
+192.168.32.10
