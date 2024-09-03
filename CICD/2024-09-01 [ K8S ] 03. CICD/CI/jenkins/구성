@@ -1,0 +1,140 @@
+Git
+?
+Repositories
+?
+Repository URL
+?
+https://github.com/changwskr/cicd-web-project-main.git
+Credentials
+?
+
+- none -
+고급
+
+Add Repository
+Branches to build
+?
+Branch Specifier (blank for 'any')
+?
+*/main
+
+Add Branch
+Repository browser
+?
+
+(자동)
+Additional Behaviours
+Add
+빌드 유발
+
+Build whenever a SNAPSHOT dependency is built
+?
+
+Schedule build when some upstream has no successful builds
+?
+
+빌드를 원격으로 유발 (예: 스크립트 사용)
+?
+
+Build after other projects are built
+?
+
+Build periodically
+?
+
+GitHub hook trigger for GITScm polling
+?
+
+Poll SCM
+?
+Schedule
+?
+* * * * *
+Do you really mean "every minute" when you say "* * * * *"? Perhaps you meant "H * * * *" to poll once per hour
+Would last have run at Tuesday, September 3, 2024 at 5:18:16 AM Coordinated Universal Time; would next run at Tuesday, September 3, 2024 at 5:18:16 AM Coordinated Universal Time.
+
+Ignore post-commit hooks
+?
+빌드 환경
+
+Delete workspace before build starts
+
+Use secret text(s) or file(s)
+?
+
+Provide Configuration files
+?
+
+Send files or execute commands over SSH before the build starts
+?
+
+Send files or execute commands over SSH after the build runs
+?
+
+Add timestamps to the Console Output
+
+Inspect build log for published build scans
+
+Terminate a build if it's stuck
+
+With Ant
+?
+Pre Steps
+Add pre-build step
+Build
+Root POM
+?
+pom.xml
+Goals and options
+?
+clean compile package
+고급
+Post Steps
+Run only if build succeeds
+
+Run only if build succeeds or is unstable
+
+Run regardless of build result
+Should the post-build steps run only for successful builds, etc.
+Add post-build step
+Build Settings
+
+E-mail Notification
+빌드 후 조치
+Build other projects
+?
+
+Projects to build
+2024-09-03-02-K8S-For-CD
+Trigger only if build is stable
+Trigger even if the build is unstable
+Trigger even if the build fails
+Send build artifacts over SSH
+?
+
+SSH Publishers
+SSH Server
+Name
+?
+
+ansible-server
+고급
+Transfers
+Transfer Set
+Source files
+?
+target/*.war
+Remove prefix
+?
+target
+Remote directory
+?
+.
+Exec command
+?
+ansible-playbook -i ./playbook/hosts-docker create-cicd-project-image-playbook.yml
+All of the transfer fields (except for Exec timeout) support substitution of Jenkins environment variables
+고급
+Add Transfer Set
+Add Server
+고급
