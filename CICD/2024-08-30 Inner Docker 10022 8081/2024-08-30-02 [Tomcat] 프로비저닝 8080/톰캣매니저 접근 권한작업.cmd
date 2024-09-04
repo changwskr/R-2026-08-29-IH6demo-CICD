@@ -1,4 +1,4 @@
-
+ .
 webapps/manager/META-INF/context.xml
 
 $TOMCAT_HOM/webapps/manager/META-INF/context.xml 에서 valve 줄을 주석처리하면됩니다.
