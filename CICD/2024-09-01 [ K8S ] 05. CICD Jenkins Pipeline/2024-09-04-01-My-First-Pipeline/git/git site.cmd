@@ -1,1 +1,1 @@
-https://github.com/joneconsulting/jenkins_pipeline_script/blob/master/deploy.sh
+https://github.com/joneconsulting/cicd-web-project.git
