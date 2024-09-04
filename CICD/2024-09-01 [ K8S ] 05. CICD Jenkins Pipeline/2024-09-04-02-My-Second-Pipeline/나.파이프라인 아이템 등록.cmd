@@ -26,7 +26,7 @@ pipeline {
         }
         stage('ssh publisher') {
             steps {
-               sshPublisher(publishers: [sshPublisherDesc(configName: 'aws-docker-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'docker build -t edowon0623/devops_exam1 -f Dockerfile .', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: 'target', sourceFiles: 'target/devops_demo-0.1.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+               sshPublisher(publishers: [sshPublisherDesc(configName: 'docker-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'docker build -t changwskr/jenkin-pipeline-item2-tomcat .', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: 'target', sourceFiles: 'target/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
             }
         }
     }
