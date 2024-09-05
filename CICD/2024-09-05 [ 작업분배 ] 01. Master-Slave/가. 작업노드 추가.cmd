@@ -1,4 +1,5 @@
 1) 노드 추가
+   기본노드 정보 git java 설치
     docker run --privileged ^
             --name jenkins-node1 ^
             -itd ^
