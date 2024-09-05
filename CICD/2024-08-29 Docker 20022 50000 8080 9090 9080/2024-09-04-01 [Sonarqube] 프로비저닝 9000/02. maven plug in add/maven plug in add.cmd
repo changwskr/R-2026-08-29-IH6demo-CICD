@@ -14,7 +14,6 @@
           </excludes>
         </configuration>
       </plugin>
-
       <plugin>
         <groupId>org.sonarsource.scanner.maven</groupId>
         <artifactId>sonar-maven-plugin</artifactId>
