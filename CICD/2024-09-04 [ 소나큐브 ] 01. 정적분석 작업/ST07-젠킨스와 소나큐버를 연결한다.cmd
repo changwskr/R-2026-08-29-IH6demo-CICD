@@ -29,7 +29,8 @@
     SonarQube servers
         If checked, job administrators will be able to inject a SonarQube server configuration as environment variables in the build.
 
-        Environment variables
+        (v) Environment variables
+
         SonarQube installations
         List of SonarQube installations
             Name
